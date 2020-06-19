@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="A dice roller supporting mutiple sided dice.">
+        <meta name="keywords" content="dice, games, rp, role playing, random, d20, shadowrun ">
+        <meta name="author" content="tornotlukin">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- JS load -->
+        <script type="text/javascript" src="./js/vue.js" defer></script>        
+        <script type="text/javascript" src="./js/jquery-3.5.1.js" defer></script>
+        <script type="text/javascript" src="./js/popper.min.js" defer></script>
+        <script type="text/javascript" src="./js/bootstrap.js" defer></script>
+        <script type="text/javascript" src="./js/dicey.js" defer></script>
+        <!-- CSS load -->
+        <link rel="stylesheet" type='text/css' href="./css/bootstrap.css"/>
+        <link rel="stylesheet" type='text/css' href="./css/dicey.css"/>
+    </head>
+    <body>
+        <div id="app"> 
+        <!-- Vue app wrapper -->
+
+            <!-- Title Nav -->
+            <nav class="navbar navbar-dark bg-dark">
+                <span class="navbar-brand mb-0 h1">Dicey Dice Roller</span>
+            </nav>
+
+             <!-- Dice image area -->
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <div v-html="dieVisualsTop">
+
+                    </div>
+                </div>
+            </div>
+
+             <!-- Roll button -->
+            <div class="container">
+                <button type="button" class="btn btn-success btn-lg btn-block" v-on:click="rollTheDice">Roll!</button>
+            </div>
+
+            <!-- User Interaction Dice Cue -->
+            <div class="container-fluid">
+            <div class="row">
+
+                <!-- How many dice to roll -->
+                <div class="col-sm-3">
+                    <div class="input-group input-group-lg mt-4">                    
+                            <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary btn-primary" type="button" id="addOneToDiceCount" v-on:click="numberOfDice ++"><img src="./icons/arrow-bar-up.svg"></button>
+                            </div>
+                            <input class="form-control" v-model="numberOfDice"></input>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary btn-warning" type="button" id="subtractOneToDiceCount" v-if="numberOfDice > 1" v-on:click="numberOfDice --"><img src="./icons/arrow-bar-down.svg"></button>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Multiplication symbol -->
+                <div class="col-sm-1">
+                    <div class="mt-4"> 
+                        <img src="./icons/x.svg" width="50px" height="50px">
+                    </div>
+                </div>
+
+                <!-- Die type selector -->
+                <div class="col-sm-3">
+                    <div class="input-group input-group-lg mt-4">                    
+                        <select class="form-control" id="dieTypeStyle" v-model="dieType" @change="diePicCheck">
+                        <option value="d2">d2</option>
+                        <option value="d4">d4</option>
+                        <option value="d6">d6</option>
+                        <option value="d8">d8</option>
+                        <option value="d10">d10</option>
+                        <option value="d12">d12</option>
+                        <option value="d20">d20</option>
+                        <option value="d100">d100</option>
+                        <option style="color:red" value="d52">Poker Deck</option>
+                        <option style="color:red" value="dTarot">Tarot Deck</option>
+                        </select>          
+                    </div>
+                </div>
+
+                <!-- Die type picture -->
+                <div class="col-sm-1">
+                    <div class="mt-4" id="showDieImage"> 
+                        <span v-html="dieTypePic"></span>
+                    </div>
+                </div>
+
+                <!-- Add dice? -->
+                <div class="col-sm-3">
+                    <div class="input-group input-group-sm mt-4">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="addDice" id="addDiceChecker" v-model="addDiceRolls">
+                            </div>
+                        </div>
+                                <input type="text" class="form-control" placeholder="Dice Sum?" readonly>
+                    </div>
+                </div>
+
+                <!-- New Set? -->
+                <div class="col-sm-1">
+                    <div class="mt-4">
+                    <button class="btn btn-sm btn-info"><img src="./icons/file-plus.svg"></button>
+                </div>
+                </div>
+
+            </div>
+            </div><!-- User Interaction Dice Cue END-->
+
+            <!-- History palette -->
+            <div class="jumbotron jumbotron-fluid mt-4">
+                <div class="container">
+                    <div v-html="rollHistory">
+
+                    </div>
+                </div>
+            <!-- Clear History button -->
+                <button type="button" class="btn btn-warning btn-sm btn-block mt-4" v-on:click="clearHistory">Clear Roll History</button>
+            </div>
+
+        <!-- Vue app wrapper END-->
+        </div> 
+        
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+    </body>
+</html>
